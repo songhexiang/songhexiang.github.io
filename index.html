@@ -260,6 +260,194 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://songhexiang.github.io/2017/04/10/storage-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hexiang Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25613681?v=3&u=2ab2f40fabd733bb5be5055881caba1099fba9a6&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Song's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/10/storage-type/" itemprop="url">
+                  计算机存储数据的大小端字节序
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-10T20:23:50+08:00">
+                2017-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/10/storage-type/" class="leancloud_visitors" data-flag-title="计算机存储数据的大小端字节序">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="计算机硬件的两种存储数据的方式"><a href="#计算机硬件的两种存储数据的方式" class="headerlink" title="计算机硬件的两种存储数据的方式"></a>计算机硬件的两种存储数据的方式</h2><ol>
+<li>大端字节序 little endian</li>
+<li>小端字节序 big endian</li>
+</ol>
+<p>举例来说数值0x1234使用两个字节存储，数值高位字节是0x12,数值低位字节是0x34  </p>
+<ol>
+<li>大端字节序：高位字节在前，低位字节在后，这是人类读取数值的方式</li>
+<li>小端字节序：低位字节在前，高位字节在后，即以0x3412的形式存储</li>
+</ol>
+<p>同理数值0x12345678的存储方式如下表所示</p>
+<table>
+<thead>
+<tr>
+<th>存储方式</th>
+<th style="text-align:center">address:0x1000</th>
+<th style="text-align:center">0x1001</th>
+<th style="text-align:center">0x1002</th>
+<th style="text-align:center">0x1003</th>
+<th style="text-align:center">0x1004</th>
+<th style="text-align:center">0x1005</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大端存储 big endian</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">34</td>
+<td style="text-align:center">56</td>
+<td style="text-align:center">78</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>小端存储 little endian</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">78</td>
+<td style="text-align:center">56</td>
+<td style="text-align:center">34</td>
+<td style="text-align:center">12</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>大端字节序先读到数值高位字节，小端字节序先读到数值低位字节序</li>
+<li>只有读取的时候才区分字节序，其他情况不用考虑   </li>
+</ul>
+<p>转换公式如下</p>
+<pre><code>//处理器读入16位整数(大端字节序)，占两个字节
+x = buffer[offset] * 256 + buf[offset+1];
+x = buffer[offset] &lt;&lt; 8 | buffer[offset+1];
+//处理器读入16位整数(小端字节序)，占两个字节
+x = buffer[offset] + buffer[offset+1]*256;
+x = buffer[offset] | (buffer[offset+1] &lt;&lt; 8);
+//同理32位整数(大端字节序)
+i = (data[3] &lt;&lt; 0) | (data[2] &lt;&lt; 8) | (data[1] &lt;&lt; 16) | (data[0] &lt;&lt; 24);
+//32位整数(小端字节序)
+i = (data[0] &lt;&lt; 0) | (data[1] &lt;&lt; 8) | (data[2] &lt;&lt; 16) | (data[3] &lt;&lt; 24);
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://songhexiang.github.io/2017/04/10/webbench/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -860,7 +1048,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -873,7 +1061,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
