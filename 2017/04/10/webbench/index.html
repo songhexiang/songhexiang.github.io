@@ -87,21 +87,21 @@
 
 
 
-<meta name="description" content="学习webbench需要掌握的基础知识（webbench源代码学习心得）简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()">
+<meta name="description" content="简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()    接下来从主函数入口讲起  主函数{  参数处理，重点是getopt_l">
 <meta name="keywords" content="C">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webbench">
+<meta property="og:title" content="学习webbench需要掌握的基础知识（webbench源代码学习心得）">
 <meta property="og:url" content="http://songhexiang.github.io/2017/04/10/webbench/index.html">
 <meta property="og:site_name" content="Song's Blog">
-<meta property="og:description" content="学习webbench需要掌握的基础知识（webbench源代码学习心得）简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()">
+<meta property="og:description" content="简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()    接下来从主函数入口讲起  主函数{  参数处理，重点是getopt_l">
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/webbench%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/http%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/%E5%9F%BA%E4%BA%8ETCP%E7%9A%84socket%E9%80%9A%E4%BF%A1%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png">
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/%E5%9F%BA%E4%BA%8EUDP%E7%9A%84socket%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png">
-<meta property="og:updated_time" content="2017-04-10T08:02:53.432Z">
+<meta property="og:updated_time" content="2017-04-10T12:14:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webbench">
-<meta name="twitter:description" content="学习webbench需要掌握的基础知识（webbench源代码学习心得）简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()">
+<meta name="twitter:title" content="学习webbench需要掌握的基础知识（webbench源代码学习心得）">
+<meta name="twitter:description" content="简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()    接下来从主函数入口讲起  主函数{  参数处理，重点是getopt_l">
 <meta name="twitter:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/webbench%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png">
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <title> webbench | Song's Blog </title>
+  <title> 学习webbench需要掌握的基础知识（webbench源代码学习心得） | Song's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -286,7 +286,7 @@
             
             
               
-                webbench
+                学习webbench需要掌握的基础知识（webbench源代码学习心得）
               
             
           </h1>
@@ -319,7 +319,7 @@
 
           
           
-             <span id="/2017/04/10/webbench/" class="leancloud_visitors" data-flag-title="webbench">
+             <span id="/2017/04/10/webbench/" class="leancloud_visitors" data-flag-title="学习webbench需要掌握的基础知识（webbench源代码学习心得）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -348,7 +348,7 @@
       
 
       
-        <h1 id="学习webbench需要掌握的基础知识（webbench源代码学习心得）"><a href="#学习webbench需要掌握的基础知识（webbench源代码学习心得）" class="headerlink" title="学习webbench需要掌握的基础知识（webbench源代码学习心得）"></a>学习webbench需要掌握的基础知识（webbench源代码学习心得）</h1><h2 id="简述webbench源码思路"><a href="#简述webbench源码思路" class="headerlink" title="简述webbench源码思路"></a>简述webbench源码思路</h2><p>webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起</p>
+        <h2 id="简述webbench源码思路"><a href="#简述webbench源码思路" class="headerlink" title="简述webbench源码思路"></a>简述webbench源码思路</h2><p>webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起</p>
 <h3 id="webbench-c"><a href="#webbench-c" class="headerlink" title="webbench.c"></a>webbench.c</h3><ul>
 <li>定义了各种变量，作用代码中的注释都有讲解</li>
 <li>定义了五个函数<ul>
@@ -811,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#学习webbench需要掌握的基础知识（webbench源代码学习心得）"><span class="nav-number">1.</span> <span class="nav-text">学习webbench需要掌握的基础知识（webbench源代码学习心得）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述webbench源码思路"><span class="nav-number">1.1.</span> <span class="nav-text">简述webbench源码思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webbench-c"><span class="nav-number">1.1.1.</span> <span class="nav-text">webbench.c</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于URL"><span class="nav-number">1.2.</span> <span class="nav-text">关于URL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#URL实例"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">URL实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http消息的结构"><span class="nav-number">1.3.</span> <span class="nav-text">http消息的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Request-消息分为3部分"><span class="nav-number">1.3.1.</span> <span class="nav-text">HTTP Request 消息分为3部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#request-line实例"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">request line实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-header实例"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">http header实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#body实例"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">body实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于METHOD中POST和GET方法的区别"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">关于METHOD中POST和GET方法的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Response消息也分为三部分"><span class="nav-number">1.3.2.</span> <span class="nav-text">HTTP Response消息也分为三部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于getopt-getopt-long参数处理函数"><span class="nav-number">1.4.</span> <span class="nav-text">关于getopt getopt_long参数处理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述"><span class="nav-number">1.4.1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getopt"><span class="nav-number">1.4.2.</span> <span class="nav-text">getopt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getopt-long"><span class="nav-number">1.4.3.</span> <span class="nav-text">getopt_long</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于网络IPC-套接字"><span class="nav-number">1.5.</span> <span class="nav-text">关于网络IPC:套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络进程间通信：socket-API简介"><span class="nav-number">1.5.1.</span> <span class="nav-text">网络进程间通信：socket API简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#套接字描述符"><span class="nav-number">1.5.2.</span> <span class="nav-text">套接字描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址格式"><span class="nav-number">1.5.3.</span> <span class="nav-text">地址格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将套接字和地址绑定"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">将套接字和地址绑定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节序转换"><span class="nav-number">1.5.4.</span> <span class="nav-text">字节序转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接"><span class="nav-number">1.5.5.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传输"><span class="nav-number">1.5.6.</span> <span class="nav-text">数据传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭套接字描述符"><span class="nav-number">1.5.7.</span> <span class="nav-text">关闭套接字描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于TCP的socket通信的基本流程"><span class="nav-number">1.5.8.</span> <span class="nav-text">基于TCP的socket通信的基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于UDP的socket通信的基本流程"><span class="nav-number">1.5.9.</span> <span class="nav-text">基于UDP的socket通信的基本流程</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述webbench源码思路"><span class="nav-number">1.</span> <span class="nav-text">简述webbench源码思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webbench-c"><span class="nav-number">1.1.</span> <span class="nav-text">webbench.c</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于URL"><span class="nav-number">2.</span> <span class="nav-text">关于URL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#URL实例"><span class="nav-number">2.0.1.</span> <span class="nav-text">URL实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http消息的结构"><span class="nav-number">3.</span> <span class="nav-text">http消息的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Request-消息分为3部分"><span class="nav-number">3.1.</span> <span class="nav-text">HTTP Request 消息分为3部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#request-line实例"><span class="nav-number">3.1.1.</span> <span class="nav-text">request line实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#http-header实例"><span class="nav-number">3.1.2.</span> <span class="nav-text">http header实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#body实例"><span class="nav-number">3.1.3.</span> <span class="nav-text">body实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于METHOD中POST和GET方法的区别"><span class="nav-number">3.1.4.</span> <span class="nav-text">关于METHOD中POST和GET方法的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Response消息也分为三部分"><span class="nav-number">3.2.</span> <span class="nav-text">HTTP Response消息也分为三部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于getopt-getopt-long参数处理函数"><span class="nav-number">4.</span> <span class="nav-text">关于getopt getopt_long参数处理函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简述"><span class="nav-number">4.1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getopt"><span class="nav-number">4.2.</span> <span class="nav-text">getopt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getopt-long"><span class="nav-number">4.3.</span> <span class="nav-text">getopt_long</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于网络IPC-套接字"><span class="nav-number">5.</span> <span class="nav-text">关于网络IPC:套接字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络进程间通信：socket-API简介"><span class="nav-number">5.1.</span> <span class="nav-text">网络进程间通信：socket API简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#套接字描述符"><span class="nav-number">5.2.</span> <span class="nav-text">套接字描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址格式"><span class="nav-number">5.3.</span> <span class="nav-text">地址格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将套接字和地址绑定"><span class="nav-number">5.3.1.</span> <span class="nav-text">将套接字和地址绑定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节序转换"><span class="nav-number">5.4.</span> <span class="nav-text">字节序转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接"><span class="nav-number">5.5.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传输"><span class="nav-number">5.6.</span> <span class="nav-text">数据传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭套接字描述符"><span class="nav-number">5.7.</span> <span class="nav-text">关闭套接字描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于TCP的socket通信的基本流程"><span class="nav-number">5.8.</span> <span class="nav-text">基于TCP的socket通信的基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于UDP的socket通信的基本流程"><span class="nav-number">5.9.</span> <span class="nav-text">基于UDP的socket通信的基本流程</span></a></li></ol></li></ol></div>
             
 
           </div>
