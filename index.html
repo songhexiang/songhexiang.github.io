@@ -398,11 +398,14 @@
 <pre><code>//处理器读入16位整数(大端字节序)，占两个字节
 x = buffer[offset] * 256 + buf[offset+1];
 x = buffer[offset] &lt;&lt; 8 | buffer[offset+1];
+
 //处理器读入16位整数(小端字节序)，占两个字节
 x = buffer[offset] + buffer[offset+1]*256;
 x = buffer[offset] | (buffer[offset+1] &lt;&lt; 8);
+
 //同理32位整数(大端字节序)
 i = (data[3] &lt;&lt; 0) | (data[2] &lt;&lt; 8) | (data[1] &lt;&lt; 16) | (data[0] &lt;&lt; 24);
+
 //32位整数(小端字节序)
 i = (data[0] &lt;&lt; 0) | (data[1] &lt;&lt; 8) | (data[2] &lt;&lt; 16) | (data[3] &lt;&lt; 24);
 </code></pre>

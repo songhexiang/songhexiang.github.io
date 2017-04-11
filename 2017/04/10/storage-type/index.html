@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://songhexiang.github.io/2017/04/10/storage-type/index.html">
 <meta property="og:site_name" content="Song's Blog">
 <meta property="og:description" content="计算机硬件的两种存储数据的方式 大端字节序 little endian 小端字节序 big endian  举例来说数值0x1234使用两个字节存储，数值高位字节是0x12,数值低位字节是0x34    大端字节序：高位字节在前，低位字节在后，这是人类读取数值的方式 小端字节序：低位字节在前，高位字节在后，即以0x3412的形式存储  同理数值0x12345678的存储方式如下表所示    存储方">
-<meta property="og:updated_time" content="2017-04-10T12:59:36.000Z">
+<meta property="og:updated_time" content="2017-04-11T08:18:24.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机存储数据的大小端字节序">
 <meta name="twitter:description" content="计算机硬件的两种存储数据的方式 大端字节序 little endian 小端字节序 big endian  举例来说数值0x1234使用两个字节存储，数值高位字节是0x12,数值低位字节是0x34    大端字节序：高位字节在前，低位字节在后，这是人类读取数值的方式 小端字节序：低位字节在前，高位字节在后，即以0x3412的形式存储  同理数值0x12345678的存储方式如下表所示    存储方">
@@ -393,11 +393,14 @@
 <pre><code>//处理器读入16位整数(大端字节序)，占两个字节
 x = buffer[offset] * 256 + buf[offset+1];
 x = buffer[offset] &lt;&lt; 8 | buffer[offset+1];
+
 //处理器读入16位整数(小端字节序)，占两个字节
 x = buffer[offset] + buffer[offset+1]*256;
 x = buffer[offset] | (buffer[offset+1] &lt;&lt; 8);
+
 //同理32位整数(大端字节序)
 i = (data[3] &lt;&lt; 0) | (data[2] &lt;&lt; 8) | (data[1] &lt;&lt; 16) | (data[0] &lt;&lt; 24);
+
 //32位整数(小端字节序)
 i = (data[0] &lt;&lt; 0) | (data[1] &lt;&lt; 8) | (data[2] &lt;&lt; 16) | (data[3] &lt;&lt; 24);
 </code></pre>
