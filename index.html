@@ -347,9 +347,9 @@
 
       
         
-          <p>  <p>任何一个用过或学过C的人对malloc都不会陌生。大家都知道malloc可以分配一段连续的内存空间，并且在不再使用时可以通过free释放掉。但是，许多程序员对malloc背后的事情并不熟悉，许多人甚至把malloc当做操作系统所提供的系统调用或C的关键字。实际上，malloc只是C的标准库中提供的一个普通函数，而且实现malloc的<strong>基本</strong>思想并不复杂，任何一个对C和操作系统有些许了解的程序员都可以很容易理解。</p></p>
-<p><p>这篇文章通过实现一个简单的malloc来描述malloc背后的机制。当然与现有C的标准库实现（例如glibc）相比，我们实现的malloc并不是特别高效，但是这个实现比目前真实的malloc实现要简单很多，因此易于理解。重要的是，这个实现和真实实现在基本原理上是一致的。</p></p>
-<p><p>这篇文章将首先介绍一些所需的基本知识，如操作系统对进程的内存管理以及相关的系统调用，然后逐步实现一个简单的malloc。为了简单起见，这篇文章将只考虑x86_64体系结构，操作系统为Linux。</p><br><!-- toc --><br>
+          
+            任何一个用过或学过C的人对malloc都不会陌生。大家都知道malloc可以分配一段连续的内存空间，并且在不再使用时可以通过free释放掉。但是，许多程序员对malloc背后的事情并不熟悉，许多人甚至把malloc当做操作系统所提供的系统调用或C的关键字。实际上，malloc只是C的标准库中提供
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/11/malloc/#more" rel="contents">
@@ -630,33 +630,16 @@
 
       
         
-          <h2 id="简述webbench源码思路"><a href="#简述webbench源码思路" class="headerlink" title="简述webbench源码思路"></a>简述webbench源码思路</h2><p>webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起</p>
-<h3 id="webbench-c"><a href="#webbench-c" class="headerlink" title="webbench.c"></a>webbench.c</h3><ul>
-<li>定义了各种变量，作用代码中的注释都有讲解</li>
-<li>定义了五个函数<ul>
-<li>benchcore()</li>
-<li>bench()</li>
-<li>build_request()</li>
-<li>alarm_handler()</li>
-<li>usage()</li>
-</ul>
-</li>
-</ul>
-<p>接下来从主函数入口讲起</p>
-<ul>
-<li><p>主函数{</p>
-<ol>
-<li>参数处理，重点是getopt_long的使用，确实很有效经典</li>
-<li>调用build_request(),建立http消息基本结构</li>
-<li>返回bench() bench()函数完成了将http消息发送给服务器并接受响应消息的任务<br>}</li>
-</ol>
-</li>
-<li><p>bench(){</p>
-<ol>
-<li>确认目标服务器可达，首次调用客户端向目标服务器发送消息</li>
-<li>建立管道，用于父进程和子进程之间通信（子进程将运行过生成的结果传递给父进程）</li>
-<li>循环fork,创建指定数量的子进程，代表相同数量的客户端</li>
-<li>(1) 子进程 benchcore(); 将结果写进管道；<br>(2) 父进程 打开管道读数据；更新speed,bytes,succeed,failed;<br>}
+          
+          简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起
+webbench.c
+定义了各种变量，作用代码中的注释都有讲解
+定义了五个函数
+benchcore()
+bench()
+build_request()
+alarm_handle
+          ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/10/webbench/#more" rel="contents">

@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/http%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF%E7%BB%93%E6%9E%84.png">
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/%E5%9F%BA%E4%BA%8ETCP%E7%9A%84socket%E9%80%9A%E4%BF%A1%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png">
 <meta property="og:image" content="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/%E5%9F%BA%E4%BA%8EUDP%E7%9A%84socket%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B.png">
-<meta property="og:updated_time" content="2017-04-16T08:12:42.286Z">
+<meta property="og:updated_time" content="2017-04-16T08:31:00.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习webbench需要掌握的基础知识（webbench源代码学习心得）">
 <meta name="twitter:description" content="简述webbench源码思路webench整体分为一个压测工具和一个向目标服务器发送请求消息的客户端，首先从从主体代码看起 webbench.c 定义了各种变量，作用代码中的注释都有讲解 定义了五个函数 benchcore() bench() build_request() alarm_handler() usage()    接下来从主函数入口讲起  主函数{  参数处理，重点是getopt_l">
@@ -374,12 +374,13 @@
 <li>确认目标服务器可达，首次调用客户端向目标服务器发送消息</li>
 <li>建立管道，用于父进程和子进程之间通信（子进程将运行过生成的结果传递给父进程）</li>
 <li>循环fork,创建指定数量的子进程，代表相同数量的客户端</li>
-<li>(1) 子进程 benchcore(); 将结果写进管道；<br>(2) 父进程 打开管道读数据；更新speed,bytes,succeed,failed;<br>}<a id="more"></a>
-我认为这张图很好的解释了bench函数<br><img src="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/webbench%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="image"></li>
+<li>(1) 子进程 benchcore(); 将结果写进管道；<br>(2) 父进程 打开管道读数据；更新speed,bytes,succeed,failed;<br>}</li>
 </ol>
 </li>
-<li><p>benchcore(){   //真正的压力测试的模块</p>
-<ol>
+</ul>
+<p>我认为这张图很好的解释了bench函数<br><img src="https://github.com/songhexiang/windows/blob/master/webbench_song-0.0.1/image/webbench%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png" alt="image"></p>
+<ul>
+<li>benchcore(){   //真正的压力测试的模块<ol>
 <li>打开定时器</li>
 <li>与目标服务器建立TCP连接</li>
 <li>while(时间到跳出循环){<ol>
