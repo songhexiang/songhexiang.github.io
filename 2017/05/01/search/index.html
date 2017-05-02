@@ -1,0 +1,948 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="STL," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="STL 算法概述STL算法部分主要由头文件algorithm,numeric,functional组成。要使用 STL中的算法函数必须包含头文件algorithm，对于数值算法须包含numeric，functional中则定义了一些模板类，用来声明函数对象。   STL中算法大致分为四类：  非可变序列算法：指不直接修改其所操作的容器内容的算法。 可变序列算法：指可以修改它们所操作的容器内容的算法">
+<meta name="keywords" content="STL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL algorithm之查找算法">
+<meta property="og:url" content="http://songhexiang.github.io/2017/05/01/search/index.html">
+<meta property="og:site_name" content="Song's Blog">
+<meta property="og:description" content="STL 算法概述STL算法部分主要由头文件algorithm,numeric,functional组成。要使用 STL中的算法函数必须包含头文件algorithm，对于数值算法须包含numeric，functional中则定义了一些模板类，用来声明函数对象。   STL中算法大致分为四类：  非可变序列算法：指不直接修改其所操作的容器内容的算法。 可变序列算法：指可以修改它们所操作的容器内容的算法">
+<meta property="og:updated_time" content="2017-05-02T13:11:19.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="STL algorithm之查找算法">
+<meta name="twitter:description" content="STL 算法概述STL算法部分主要由头文件algorithm,numeric,functional组成。要使用 STL中的算法函数必须包含头文件algorithm，对于数值算法须包含numeric，functional中则定义了一些模板类，用来声明函数对象。   STL中算法大致分为四类：  非可变序列算法：指不直接修改其所操作的容器内容的算法。 可变序列算法：指可以修改它们所操作的容器内容的算法">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://songhexiang.github.io/2017/05/01/search/"/>
+
+
+
+
+
+  <title> STL algorithm之查找算法 | Song's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91e43d531cb0b275d05c52f825339440";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Song's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">welcome to my blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://songhexiang.github.io/2017/05/01/search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hexiang Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/25613681?v=3&u=2ab2f40fabd733bb5be5055881caba1099fba9a6&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Song's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                STL algorithm之查找算法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-01T22:03:32+08:00">
+                2017-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/01/search/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/05/01/search/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/01/search/" class="leancloud_visitors" data-flag-title="STL algorithm之查找算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="STL-算法概述"><a href="#STL-算法概述" class="headerlink" title="STL 算法概述"></a>STL 算法概述</h2><p>STL算法部分主要由头文件algorithm,numeric,functional组成。<br>要使用 STL中的算法函数必须包含头文件algorithm，对于数值算法须包含numeric，functional中则定义了一些模板类，用来声明函数对象。  </p>
+<p>STL中算法大致分为四类：</p>
+<ol>
+<li>非可变序列算法：指不直接修改其所操作的容器内容的算法。</li>
+<li>可变序列算法：指可以修改它们所操作的容器内容的算法。</li>
+<li>排序算法：包括对序列进行排序和合并的算法、搜索算法以及有序序列上的集合操作。</li>
+<li>数值算法：对容器内容进行数值计算。</li>
+</ol>
+<h3 id="查找算法-13个-：判断容器中是否包含某个值"><a href="#查找算法-13个-：判断容器中是否包含某个值" class="headerlink" title="查找算法(13个)：判断容器中是否包含某个值"></a>查找算法(13个)：判断容器中是否包含某个值</h3><pre><code>adjacent_find:            在iterator对标识元素范围内，查找一对相邻重复元素，找到则返回指向这对元素的第一个元素的ForwardIterator。否则返回last。重载版本使用输入的二元操作符代替相等的判断。
+binary_search:            在有序序列中查找value，找到返回true。重载的版本实用指定的比较函数对象或函数指针来判断相等。
+count:                    利用等于操作符，把标志范围内的元素与输入值比较，返回相等元素个数。
+count_if:                 利用输入的操作符，对标志范围内的元素进行操作，返回结果为true的个数。
+equal_range:              功能类似equal，返回一对iterator，第一个表示lower_bound，第二个表示upper_bound。
+find:                     利用底层元素的等于操作符，对指定范围内的元素与输入值进行比较。当匹配时，结束搜索，返回该元素的一个InputIterator。
+find_end:                 在指定范围内查找&quot;由输入的另外一对iterator标志的第二个序列&quot;的最后一次出现。找到则返回最后一对的第一个ForwardIterator，否则返回输入的&quot;另外一对&quot;的第一个ForwardIterator。重载版本使用用户输入的操作符代替等于操作。
+find_first_of:            在指定范围内查找&quot;由输入的另外一对iterator标志的第二个序列&quot;中任意一个元素的第一次出现。重载版本中使用了用户自定义操作符。
+find_if:                  使用输入的函数代替等于操作符执行find。
+lower_bound:              返回一个ForwardIterator，指向在有序序列范围内的可以插入指定值而不破坏容器顺序的第一个位置。重载函数使用自定义比较操作。
+upper_bound:              返回一个ForwardIterator，指向在有序序列范围内插入value而不破坏容器顺序的最后一个位置，该位置标志一个大于value的值。重载函数使用自定义比较操作。
+search:                   给出两个范围，返回一个ForwardIterator，查找成功指向第一个范围内第一次出现子序列(第二个范围)的位置，查找失败指向last1。重载版本使用自定义的比较操作。
+search_n:                 在指定范围内查找val出现n次的子序列。重载版本使用自定义的比较操作。  
+</code></pre><h3 id="排序和通用算法-14个-提供元素排序策略"><a href="#排序和通用算法-14个-提供元素排序策略" class="headerlink" title="排序和通用算法(14个) 提供元素排序策略"></a>排序和通用算法(14个) 提供元素排序策略</h3><pre><code>inplace_merge:            合并两个有序序列，结果序列覆盖两端范围。重载版本使用输入的操作进行排序。
+merge:                    合并两个有序序列，存放到另一个序列。重载版本使用自定义的比较。
+nth_element:              将范围内的序列重新排序，使所有小于第n个元素的元素都出现在它前面，而大于它的都出现在后面。重载版本使用自定义的比较操作。
+partial_sort:             对序列做部分排序，被排序元素个数正好可以被放到范围内。重载版本使用自定义的比较操作。
+partial_sort_copy:        与partial_sort类似，不过将经过排序的序列复制到另一个容器。
+partition:                对指定范围内元素重新排序，使用输入的函数，把结果为true的元素放在结果为false的元素之前。
+random_shuffle:           对指定范围内的元素随机调整次序。重载版本输入一个随机数产生操作。
+reverse:                  将指定范围内元素重新反序排序。
+reverse_copy:             与reverse类似，不过将结果写入另一个容器。
+rotate:                   将指定范围内元素移到容器末尾，由middle指向的元素成为容器第一个元素。
+rotate_copy:              与rotate类似，不过将结果写入另一个容器。
+sort:                     以升序重新排列指定范围内的元素。重载版本使用自定义的比较操作。
+stable_sort:              与sort类似，不过保留相等元素之间的顺序关系。
+stable_partition:         与partition类似，不过不保证保留容器中的相对顺序。
+</code></pre><h3 id="删除和替换算法-15个"><a href="#删除和替换算法-15个" class="headerlink" title="删除和替换算法(15个)"></a>删除和替换算法(15个)</h3><pre><code>copy:                     复制序列
+copy_backward:            与copy相同，不过元素是以相反顺序被拷贝。
+iter_swap:                交换两个ForwardIterator的值。
+remove:                   删除指定范围内所有等于指定元素的元素。注意，该函数不是真正删除函数。内置函数不适合使用remove和remove_if函数。
+remove_copy:              将所有不匹配元素复制到一个制定容器，返回OutputIterator指向被拷贝的末元素的下一个位置。
+remove_if:                删除指定范围内输入操作结果为true的所有元素。
+remove_copy_if:           将所有不匹配元素拷贝到一个指定容器。
+replace:                  将指定范围内所有等于vold的元素都用vnew代替。
+replace_copy:             与replace类似，不过将结果写入另一个容器。
+replace_if:               将指定范围内所有操作结果为true的元素用新值代替。
+replace_copy_if:          与replace_if，不过将结果写入另一个容器。
+swap:                     交换存储在两个对象中的值。
+swap_range:               将指定范围内的元素与另一个序列元素值进行交换。
+unique:                   清除序列中重复元素，和remove类似，它也不能真正删除元素。重载版本使用自定义比较操作。
+unique_copy:              与unique类似，不过把结果输出到另一个容器。
+</code></pre><h3 id="排列组合算法-2个-：提供计算给定集合按一定顺序的所有可能排列组合"><a href="#排列组合算法-2个-：提供计算给定集合按一定顺序的所有可能排列组合" class="headerlink" title="排列组合算法(2个)：提供计算给定集合按一定顺序的所有可能排列组合"></a>排列组合算法(2个)：提供计算给定集合按一定顺序的所有可能排列组合</h3><pre><code>next_permutation:         取出当前范围内的排列，并重新排序为下一个排列。重载版本使用自定义的比较操作。
+prev_permutation:         取出指定范围内的序列并将它重新排序为上一个序列。如果不存在上一个序列则返回false。重载版本使用自定义的比较操作。
+</code></pre><h3 id="算术算法-4个"><a href="#算术算法-4个" class="headerlink" title="算术算法(4个)"></a>算术算法(4个)</h3><pre><code>accumulate:               iterator对标识的序列段元素之和，加到一个由val指定的初始值上。重载版本不再做加法，而是传进来的二元操作符被应用到元素上。
+partial_sum:              创建一个新序列，其中每个元素值代表指定范围内该位置前所有元素之和。重载版本使用自定义操作代替加法。
+inner_product:            对两个序列做内积(对应元素相乘，再求和)并将内积加到一个输入的初始值上。重载版本使用用户定义的操作。
+adjacent_difference:      创建一个新序列，新序列中每个新值代表当前元素与上一个元素的差。重载版本用指定二元操作计算相邻元素的差。
+</code></pre><h3 id="生成和异变算法-6个"><a href="#生成和异变算法-6个" class="headerlink" title="生成和异变算法(6个)"></a>生成和异变算法(6个)</h3><pre><code>fill:                     将输入值赋给标志范围内的所有元素。
+fill_n:                   将输入值赋给first到first+n范围内的所有元素。
+for_each:                 用指定函数依次对指定范围内所有元素进行迭代访问，返回所指定的函数类型。该函数不得修改序列中的元素。
+generate:                 连续调用输入的函数来填充指定的范围。
+generate_n:               与generate函数类似，填充从指定iterator开始的n个元素。
+transform:                将输入的操作作用与指定范围内的每个元素，并产生一个新的序列。重载版本将操作作用在一对元素上，另外一个元素来自输入的另外一个序列。结果输出到指定容器。
+</code></pre><h3 id="关系算法-8个"><a href="#关系算法-8个" class="headerlink" title="关系算法(8个)"></a>关系算法(8个)</h3><pre><code>equal:                    如果两个序列在标志范围内元素都相等，返回true。重载版本使用输入的操作符代替默认的等于操作符。
+includes:                 判断第一个指定范围内的所有元素是否都被第二个范围包含，使用底层元素的&lt;操作符，成功返回true。重载版本使用用户输入的函数。
+lexicographical_compare:  比较两个序列。重载版本使用用户自定义比较操作。
+max:                      返回两个元素中较大一个。重载版本使用自定义比较操作。
+max_element:              返回一个ForwardIterator，指出序列中最大的元素。重载版本使用自定义比较操作。
+min:                      返回两个元素中较小一个。重载版本使用自定义比较操作。
+min_element:              返回一个ForwardIterator，指出序列中最小的元素。重载版本使用自定义比较操作。
+mismatch:                 并行比较两个序列，指出第一个不匹配的位置，返回一对iterator，标志第一个不匹配元素位置。如果都匹配，返回每个容器的last。重载版本使用自定义的比较操作。
+</code></pre><h3 id="集合算法-4个"><a href="#集合算法-4个" class="headerlink" title="集合算法(4个)　"></a>集合算法(4个)　</h3><pre><code>set_union:                构造一个有序序列，包含两个序列中所有的不重复元素。重载版本使用自定义的比较操作。
+set_intersection:         构造一个有序序列，其中元素在两个序列中都存在。重载版本使用自定义的比较操作。
+set_difference:           构造一个有序序列，该序列仅保留第一个序列中存在的而第二个中不存在的元素。重载版本使用自定义的比较操作。
+set_symmetric_difference: 构造一个有序序列，该序列取两个序列的对称差集(并集-交集)。
+</code></pre><h3 id="堆算法-4个-超级推荐，很好用"><a href="#堆算法-4个-超级推荐，很好用" class="headerlink" title="堆算法(4个)超级推荐，很好用"></a>堆算法(4个)超级推荐，很好用</h3><pre><code>make_heap:                把指定范围内的元素生成一个堆。重载版本使用自定义比较操作。
+pop_heap:                 并不真正把最大元素从堆中弹出，而是重新排序堆。它把first和last-1交换，然后重新生成一个堆。可使用容器的back来访问被&quot;弹出&quot;的元素或者使用pop_back进行真正的删除。重载版本使用自定义的比较操作。
+push_heap:                假设first到last-1是一个有效堆，要被加入到堆的元素存放在位置last-1，重新生成堆。在指向该函数前，必须先把元素插入容器后。重载版本使用指定的比较操作。
+sort_heap:                对指定范围内的序列重新排序，它假设该序列是个有序堆。重载版本使用自定义比较操作。
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://github.com/songhexiang/songhexiang.github.io/tree/master/images/money.png" alt="Hexiang Song WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STL/" rel="tag"># STL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/29/img/" rel="prev" title="佛祖的故事">
+                佛祖的故事 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/25613681?v=3&u=2ab2f40fabd733bb5be5055881caba1099fba9a6&s=400"
+               alt="Hexiang Song" />
+          <p class="site-author-name" itemprop="name">Hexiang Song</p>
+           
+              <p class="site-description motion-element" itemprop="description">A lazy black cat sheriff</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/songhexiang" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#STL-算法概述"><span class="nav-number">1.</span> <span class="nav-text">STL 算法概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找算法-13个-：判断容器中是否包含某个值"><span class="nav-number">1.1.</span> <span class="nav-text">查找算法(13个)：判断容器中是否包含某个值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序和通用算法-14个-提供元素排序策略"><span class="nav-number">1.2.</span> <span class="nav-text">排序和通用算法(14个) 提供元素排序策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除和替换算法-15个"><span class="nav-number">1.3.</span> <span class="nav-text">删除和替换算法(15个)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排列组合算法-2个-：提供计算给定集合按一定顺序的所有可能排列组合"><span class="nav-number">1.4.</span> <span class="nav-text">排列组合算法(2个)：提供计算给定集合按一定顺序的所有可能排列组合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算术算法-4个"><span class="nav-number">1.5.</span> <span class="nav-text">算术算法(4个)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成和异变算法-6个"><span class="nav-number">1.6.</span> <span class="nav-text">生成和异变算法(6个)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关系算法-8个"><span class="nav-number">1.7.</span> <span class="nav-text">关系算法(8个)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合算法-4个"><span class="nav-number">1.8.</span> <span class="nav-text">集合算法(4个)　</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆算法-4个-超级推荐，很好用"><span class="nav-number">1.9.</span> <span class="nav-text">堆算法(4个)超级推荐，很好用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hexiang Song</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://https-songhexiang-github-io.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://songhexiang.github.io/2017/05/01/search/';
+          this.page.identifier = '2017/05/01/search/';
+          this.page.title = 'STL algorithm之查找算法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://https-songhexiang-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("17IaRMgYmmmQsf9jVtpSIYmu-gzGzoHsz", "k3UXJpGlFu3bK8YqKaOBLTkl");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
